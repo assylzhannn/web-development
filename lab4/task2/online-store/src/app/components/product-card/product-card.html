@@ -1,1 +1,59 @@
-<p>product-card works!</p>
+<div class="card">
+  
+  <div class="image-gallery">
+    <button class="gallery-nav prev" (click)="prevImage($event)">❮</button>
+    <img [src]="product.images[currentImageIndex]" 
+         [alt]="product.name" 
+         (click)="openGallery(currentImageIndex)" 
+         class="main-image">
+    <button class="gallery-nav next" (click)="nextImage($event)">❯</button>
+    
+    
+    <div class="image-counter">{{currentImageIndex + 1}} / {{product.images.length}}</div>
+  </div>
+
+  <h3>{{ product.name }}</h3>
+  <p class="description">{{ product.description }}</p>
+
+  <div class="rating">
+    <span *ngFor="let _ of Stars" class="star filled">★</span>
+    <span *ngIf="Halfstars.length > 0" class="star half">⯨</span>
+    <span *ngFor="let _ of EmptyStars" class="star empty">☆</span>
+    <span class="rating-value">{{ product.rating }}</span>
+  </div>
+
+  <p class="price">{{ product.price | number }} ₸</p>
+
+
+  <div class="actions">
+    <a [href]="product.link" target="_blank" class="btn kaspi">Kaspi.kz</a>
+    
+    
+    <div class="share-buttons">
+      <button (click)="shareOnWhatsApp()" class="btn whatsapp" title="WhatsApp">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/3840px-WhatsApp.svg.png" alt="WhatsApp" class="share-icon">
+      </button>
+      <button (click)="shareOnTelegram()" class="btn telegram" title="Telegram">
+        <img src="https://image.similarpng.com/file/similarpng/very-thumbnail/2021/10/Telegram-icon-on-transparent-background-PNG.png" alt="Telegram" class="share-icon">
+      </button>
+    </div>
+  </div>
+
+ 
+  <div class="gallery-modal" *ngIf="showGallery" (click)="closeGallery()">
+    <div class="gallery-content" (click)="$event.stopPropagation()">
+      <button class="modal-nav prev" (click)="prevImage($event)">❮</button>
+      <img [src]="product.images[currentImageIndex]" alt="Gallery">
+      <button class="modal-nav next" (click)="nextImage($event)">❯</button>
+      
+    
+      <div class="thumbnails">
+        <img *ngFor="let img of product.images; let i = index" 
+             [src]="img" 
+             (click)="currentImageIndex = i"
+             [class.active]="i === currentImageIndex">
+      </div>
+      <button class="close" (click)="closeGallery()">×</button>
+    </div>
+  </div>
+</div>
