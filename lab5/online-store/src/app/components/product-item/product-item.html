@@ -1,0 +1,46 @@
+<div class="product-card">
+  <img [src]="product().image" [alt]="product().name" class="product-image">
+
+  
+  <h3>{{ product().name }}</h3>
+
+  <p class="description">{{ product().description }}</p>
+
+  
+  <div class="rating">
+    @for (star of fullStars; track $index) {
+      <span class="star filled">★</span>
+    }
+    @if (hasHalfStar) {
+      <span class="star half">⯨</span>
+    }
+    @for (star of emptyStars; track $index) {
+      <span class="star empty">☆</span>
+    }
+    <span class="rating-value">{{ product().rating }}</span>
+  </div>
+
+  
+  <div class="price">{{ product().price | number }} ₸</div>
+
+  
+  <div class="action-buttons">
+    <button class="like-btn" (click)="onLike()">
+      ❤ {{ product().likes }}
+    </button>
+    <button class="delete-btn" (click)="onDelete()">
+      Delete
+    </button>
+  </div>
+
+
+  <div class="share-buttons">
+    <button class="share-btn whatsapp" (click)="shareViaWhatsApp()">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/3840px-WhatsApp.svg.png" alt="WhatsApp">
+    </button>
+    <button class="share-btn telegram" (click)="shareViaTelegram()">
+      <img src="https://image.similarpng.com/file/similarpng/very-thumbnail/2021/10/Telegram-icon-on-transparent-background-PNG.png" alt="Telegram">
+    </button>
+    <a [href]="product().link" target="_blank" class="kaspi-link">Kaspi.kz</a>
+  </div>
+</div>

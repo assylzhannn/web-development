@@ -1,0 +1,17 @@
+<div class="product-list">
+  @if (hasProducts()) {
+    <div class="product-grid">
+      @for (product of products(); track product.id) {
+        <app-product-item 
+          [product]="product"
+          (delete)="onDeleteProduct($event)"
+          (like)="onLikeProduct($event)">
+        </app-product-item>
+      }
+    </div>
+  } @else {
+    <div class="empty-message">
+      <p>No products in this category</p>
+    </div>
+  }
+</div>
