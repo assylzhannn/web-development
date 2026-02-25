@@ -1,47 +1,47 @@
-main {
+.app-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-h1 {
+header {
   text-align: center;
-  color: #333;
   margin-bottom: 30px;
 }
 
-.categories {
+header h1 {
+  color: red;
+  font-size: 32px;
+  margin: 0;
+}
+
+.category-nav {
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+  gap: 10px;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
 }
 
-.category-btn {
-  padding: 12px 24px;
-  font-size: 18px;
-  border: 2px solid #ddd;
-  border-radius: 30px;
-  background: white;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.category-btn:hover {
+.category-nav button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
   background: #f0f0f0;
-  border-color: #999;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
 }
 
-.category-btn.active {
-  background: #007bff;
+.category-nav button:hover {
+  background: #e0e0e0;
+}
+
+.category-nav button.active {
+  background: #ee2d2d;
   color: white;
-  border-color: #007bff;
 }
 
-.welcome {
-  text-align: center;
-  padding: 50px;
-  background: #f9f9f9;
-  border-radius: 10px;
+main {
+  min-height: 400px;
 }

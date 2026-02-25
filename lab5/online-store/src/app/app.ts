@@ -1,6 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductService } from '../app/services/product';
+import { ProductService } from './services/product';
 import { Category } from './models/category.model';
 import { Product } from './models/product.model';
 import { ProductListComponent } from './components/product-list/product-list';
@@ -15,27 +15,63 @@ import { ProductListComponent } from './components/product-list/product-list';
 export class AppComponent {
   categories = signal<Category[]>([]);
   selectedCategoryId = signal<number | null>(null);
-  products = signal<Product[]>([]);
+  
+  private productsByCategory = signal<Map<number, Product[]>>(new Map());
+  currentProducts = signal<Product[]>([]);
+  
+  private productService = inject(ProductService);
 
-  constructor(private productService: ProductService) {
+  constructor() {
     this.categories.set(this.productService.getCategories());
-    this.products.set(this.productService.getProducts());
+    this.loadAllCategoriesProducts();
+    
+    if (this.categories().length > 0) {
+      this.selectCategory(this.categories()[0].id);
+    }
   }
 
+  private loadAllCategoriesProducts() {
+    const categoriesMap = new Map<number, Product[]>();
+    this.categories().forEach(category => {
+      const products = this.productService.getProductsByCategory(category.id);
+      categoriesMap.set(category.id, products);
+    });
+    this.productsByCategory.set(categoriesMap);
+  }
 
   selectCategory(categoryId: number) {
     this.selectedCategoryId.set(categoryId);
+    const categoryProducts = this.productsByCategory().get(categoryId) || [];
+    this.currentProducts.set(categoryProducts);
   }
 
-  
-  getFilteredProducts(): Product[] {
-    const selectedId = this.selectedCategoryId();
-    if (!selectedId) return [];
-    return this.products().filter(p => p.categoryId === selectedId);
+  onDeleteProduct(productId: number) {
+    const currentCategoryId = this.selectedCategoryId();
+    if (!currentCategoryId) return;
+
+    this.productService.deleteProduct(productId);
+    
+    const updatedProducts = this.productService.getProductsByCategory(currentCategoryId);
+    
+    const currentMap = new Map(this.productsByCategory());
+    currentMap.set(currentCategoryId, updatedProducts);
+    this.productsByCategory.set(currentMap);
+    
+    this.currentProducts.set(updatedProducts);
   }
 
-  
-  updateProductsAfterDelete(updatedProducts: Product[]) {
-    this.products.set(updatedProducts);
+  onLikeProduct(productId: number) {
+    const currentCategoryId = this.selectedCategoryId();
+    if (!currentCategoryId) return;
+
+    this.productService.likeProduct(productId);
+    
+    const updatedProducts = this.productService.getProductsByCategory(currentCategoryId);
+    
+    const currentMap = new Map(this.productsByCategory());
+    currentMap.set(currentCategoryId, updatedProducts);
+    this.productsByCategory.set(currentMap);
+    
+    this.currentProducts.set(updatedProducts);
   }
 }

@@ -1,17 +1,15 @@
 <div class="product-list">
-  @if (hasProducts()) {
-    <div class="product-grid">
-      @for (product of products(); track product.id) {
-        <app-product-item 
-          [product]="product"
-          (delete)="onDeleteProduct($event)"
-          (like)="onLikeProduct($event)">
-        </app-product-item>
-      }
+  <div *ngIf="!hasProducts()" class="no-products">
+    <p>No products in this category</p>
+  </div>
+
+  <div class="products-grid">
+    <div *ngFor="let product of products()" class="product-grid-item">
+      <app-product-item 
+        [product]="product" 
+        (like)="onLikeProduct($event)"
+        (delete)="onDeleteProduct($event)">
+      </app-product-item>
     </div>
-  } @else {
-    <div class="empty-message">
-      <p>No products in this category</p>
-    </div>
-  }
+  </div>
 </div>

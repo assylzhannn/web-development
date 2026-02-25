@@ -1,26 +1,22 @@
-<main>
-  <h1> Kaspi.kz магазин</h1>
-  
-  <div class="categories">
-    @for (category of categories(); track category.id) {
-      <button 
-        class="category-btn" 
-        [class.active]="selectedCategoryId() === category.id"
-        (click)="selectCategory(category.id)">
-        {{ category.name }}
-      </button>
-    }
-  </div>
+<div class="app-container">
+  <header>
+    <h1>Kaspi.kz магазин</h1>
+  </header>
 
-  
-  @if (selectedCategoryId()) {
+  <nav class="category-nav">
+    <button 
+      *ngFor="let category of categories()" 
+      (click)="selectCategory(category.id)"
+      [class.active]="selectedCategoryId() === category.id">
+      {{ category.name }}
+    </button>
+  </nav>
+
+  <main>
     <app-product-list 
-      [products]="getFilteredProducts()"
-      (productsChange)="updateProductsAfterDelete($event)">
+      [products]="currentProducts()" 
+      (productDeleted)="onDeleteProduct($event)"
+      (productLiked)="onLikeProduct($event)">
     </app-product-list>
-  } @else {
-    <div class="welcome">
-      <h2>Choose the category</h2>
-    </div>
-  }
-</main>
+  </main>
+</div>
