@@ -1,0 +1,10 @@
+n=int(input())
+k=0
+i=1
+inc=0
+while(k<=n):
+    if(i>=n):
+        print(k)
+        break
+    i*=2
+    k+=1
