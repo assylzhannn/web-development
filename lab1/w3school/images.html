@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>HTML Image</h2>
+<img src="images/lucky.jpg" alt="lucky" width="500" height="333">
+
+<h2>HTML Image</h2>
+<img src="images/lab1image.jpg" alt="just photo" width="500" height="600">
+
+<!--
+src - Specifies the path to the image
+alt - Specifies an alternate text for the image
+-->
+<!--map-->
+<img src="images/workplace.jpg" alt="Workplace" usemap="#workmap">
+
+<map name="workmap">
+  <area shape="rect" coords="34,44,270,350" alt="Computer" href="computer.htm">
+  <area shape="rect" coords="290,172,333,250" alt="Phone" href="phone.htm">
+  <area shape="circle" coords="337,300,44" alt="Coffee" href="coffee.htm">
+</map>
+
+<!--picture element-->
+<picture>
+  <source media="(min-width: 650px)" srcset="images/lucky.jpg">
+  <source media="(min-width: 465px)" srcset="images/lovely runner.jpg">
+  <img src="images/lucky.jpg" style="width:auto;">
+</picture>
+</body>
+</html>

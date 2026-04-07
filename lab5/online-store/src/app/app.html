@@ -1,0 +1,22 @@
+<div class="app-container">
+  <header>
+    <h1>Kaspi.kz магазин</h1>
+  </header>
+
+  <nav class="category-nav">
+    <button 
+      *ngFor="let category of categories()" 
+      (click)="selectCategory(category.id)"
+      [class.active]="selectedCategoryId() === category.id">
+      {{ category.name }}
+    </button>
+  </nav>
+
+  <main>
+    <app-product-list 
+      [products]="currentProducts()" 
+      (productDeleted)="onDeleteProduct($event)"
+      (productLiked)="onLikeProduct($event)">
+    </app-product-list>
+  </main>
+</div>

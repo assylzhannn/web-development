@@ -1,0 +1,15 @@
+<div class="product-list">
+  <div *ngIf="!hasProducts()" class="no-products">
+    <p>No products in this category</p>
+  </div>
+
+  <div class="products-grid">
+    <div *ngFor="let product of products()" class="product-grid-item">
+      <app-product-item 
+        [product]="product" 
+        (like)="onLikeProduct($event)"
+        (delete)="onDeleteProduct($event)">
+      </app-product-item>
+    </div>
+  </div>
+</div>

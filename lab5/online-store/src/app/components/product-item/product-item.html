@@ -1,0 +1,32 @@
+<div class="product-card">
+  <div class="product-image">
+    <img [src]="product().image" [alt]="product().name">
+  </div>
+  
+  <div class="product-info">
+    <h3>{{ product().name }}</h3>
+    <p class="description">{{ product().description }}</p>
+    
+    <div class="rating">
+      <span class="stars">
+        <span *ngFor="let star of fullStars">★</span>
+        <span *ngIf="hasHalfStar">½</span>
+        <span *ngFor="let star of emptyStars">☆</span>
+      </span>
+      <span class="rating-value">{{ product().rating }}</span>
+    </div>
+    
+    <div class="price">{{ product().price | tenge }}</div>
+    
+    <div class="likes">
+      <button (click)="onLike()" class="like-btn">❤️</button>
+      <span>{{ product().likes }}</span>
+    </div>
+    
+    <div class="actions">
+      <button (click)="shareViaWhatsApp()" class="share-btn whatsapp">WhatsApp</button>
+      <button (click)="shareViaTelegram()" class="share-btn telegram">Telegram</button>
+      <button (click)="onDelete()" class="delete-btn">Delete</button>
+    </div>
+  </div>
+</div>
